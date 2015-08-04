@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Parse
 
 class MealViewController: UIViewController, UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
@@ -105,6 +106,38 @@ class MealViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
             
             // Set the meal to be passed to MealListTableViewController after the unwind segue.
             meal = Meal(name: name, photo: photo, rating: rating)
+            //imageFile
+            let comppressedImage = UIImageJPEGRepresentation(self.meal?.photo, 0.1)
+            let imageFile = PFFile(name: "image.jpg", data: comppressedImage)
+            
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), { () -> Void in
+                
+                if imageFile.save() {
+                    //save image
+                    
+                    //meal pfobject
+                    let mealObject = PFObject(className: "Meal")
+                    mealObject["name"] = self.meal?.name
+                    mealObject["rating"] = self.meal?.rating
+                    mealObject["file"] = imageFile
+                    if mealObject.save() {
+                    
+                        //user relation
+                        let currentUser = PFUser.currentUser()
+                        let relation = currentUser?.relationForKey("meals")
+                        relation?.addObject(mealObject)
+                        if currentUser!.save() {
+                            println("Successfully saved current users relations")
+                        } else {
+                            println("Failed to save current users relations")
+                        }
+                    } else {
+                        println("failed to save mealObject")
+                    }
+                } else {
+                    println("Failed to save image")
+                }
+            })
         }
     }
     

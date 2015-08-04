@@ -8,33 +8,48 @@
 //
 
 import UIKit
+import Parse
 
 class MealTableViewController: UITableViewController {
     // MARK: Properties
     
-    var meals = [Meal]()
+    var meals = [AnyObject]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+    
         
         // Use the edit button item provided by the table view controller.
         navigationItem.leftBarButtonItem = editButtonItem()
         
         // Load the sample data.
-        loadSampleMeals()
+        loadUserMeals()
     }
     
-    func loadSampleMeals() {
-        let photo1 = UIImage(named: "meal1.jpg")!
-        let meal1 = Meal(name: "Burger", photo: photo1, rating: 4)!
-        
-        let photo2 = UIImage(named: "meal2.jpg")!
-        let meal2 = Meal(name: "Burrito", photo: photo2, rating: 5)!
-        
-        let photo3 = UIImage(named: "meal3.jpg")!
-        let meal3 = Meal(name: "Pizza", photo: photo3, rating: 3)!
-        
-        meals += [meal1, meal2, meal3]
+//    func loadSampleMeals() {
+//        let photo1 = UIImage(named: "meal1.jpg")!
+//        let meal1 = Meal(name: "Burger", photo: photo1, rating: 4)!
+//        
+//        let photo2 = UIImage(named: "meal2.jpg")!
+//        let meal2 = Meal(name: "Burrito", photo: photo2, rating: 5)!
+//        
+//        let photo3 = UIImage(named: "meal3.jpg")!
+//        let meal3 = Meal(name: "Pizza", photo: photo3, rating: 3)!
+//        
+//        meals += [meal1, meal2, meal3]
+//    }
+    
+    func loadUserMeals() {
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), { () -> Void in
+            let currentUser = PFUser.currentUser()
+            let query = currentUser?.relationForKey("meals").query()
+            if let mealsArray = query?.findObjects() {
+                self.meals += mealsArray
+                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                    self.tableView.reloadData()
+                })
+            }
+        })
     }
     
     // MARK: - Table view data source
@@ -45,6 +60,7 @@ class MealTableViewController: UITableViewController {
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return meals.count
+        
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -53,12 +69,11 @@ class MealTableViewController: UITableViewController {
         let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath: indexPath) as! MealTableViewCell
         
         // Fetches the appropriate meal for the data source layout.
-        let meal = meals[indexPath.row]
+        let userMeal: (AnyObject) = meals[indexPath.row]
         
-        cell.nameLabel.text = meal.name
-        cell.photoImageView.image = meal.photo
-        cell.ratingControl.rating = meal.rating
-        
+        cell.nameLabel.text = userMeal["name"] as? String
+//        cell.photoImageView.image = userMeal["file"] as? NSData
+        cell.ratingControl.rating = (userMeal["rating"] as? Int)!
         return cell
     }
     
@@ -91,8 +106,8 @@ class MealTableViewController: UITableViewController {
             // Get the cell that generated this segue.
             if let selectedMealCell = sender as? MealTableViewCell {
                 let indexPath = tableView.indexPathForCell(selectedMealCell)!
-                let selectedMeal = meals[indexPath.row]
-                mealDetailViewController.meal = selectedMeal
+//                let selectedMeal = meals[indexPath.row]
+//                mealDetailViewController.meal = selectedMeal
             }
         }
         else if segue.identifier == "AddItem" {
@@ -116,4 +131,8 @@ class MealTableViewController: UITableViewController {
             }
         }
     }
+    
+    // MARK - Action
+    
+    
 }
