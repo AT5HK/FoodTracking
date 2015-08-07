@@ -89,12 +89,12 @@ class MealViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
         // Depending on style of presentation (modal or push presentation), this view controller needs to be dismissed in two different ways.
         let isPresentingInAddMealMode = presentingViewController is UINavigationController
         
-        if isPresentingInAddMealMode {
-            dismissViewControllerAnimated(true, completion: nil)
-        }
-        else {
+//        if isPresentingInAddMealMode {
+//            dismissViewControllerAnimated(true, completion: nil)
+//        }
+//        else {
             navigationController!.popViewControllerAnimated(true)
-        }
+        
     }
     
     // This method lets you configure a view controller before it's presented.

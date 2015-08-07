@@ -56,7 +56,7 @@
                                     <outlet property="nameLabel" destination="pcd-Ms-fzo" id="gCb-gw-ifO"/>
                                     <outlet property="photoImageView" destination="LJi-wG-dFu" id="zzN-IC-WmP"/>
                                     <outlet property="ratingControl" destination="wmH-hz-7jG" id="UtC-5b-RuF"/>
-                                    <segue destination="vXZ-lx-hvc" kind="show" identifier="ShowDetail" id="Fh5-FM-Qxa"/>
+                                    <segue destination="vXZ-lx-hvc" kind="show" identifier="showDetail" id="edC-dN-rCn"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -79,14 +79,14 @@
                         </button>
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="N8U-W4-5Eh">
                             <connections>
-                                <segue destination="rsI-Fe-bAW" kind="show" identifier="AddItem" id="664-1P-sNc"/>
+                                <segue destination="vXZ-lx-hvc" kind="show" identifier="addItem" id="qvO-UK-9W5"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uw4-mH-zoB" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1043" y="298"/>
+            <point key="canvasLocation" x="997" y="298"/>
         </scene>
         <!--Profile View Controller-->
         <scene sceneID="xxe-QZ-knG">
@@ -232,7 +232,7 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="3205" y="298"/>
+            <point key="canvasLocation" x="1757" y="298"/>
         </scene>
         <!--Sign Up-->
         <scene sceneID="Cxv-Gt-VmU">
@@ -322,24 +322,6 @@
                 </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="227" y="-355"/>
-        </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="weu-1X-yXf">
-            <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="rsI-Fe-bAW" sceneMemberID="viewController">
-                    <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="abu-Sy-mim">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="vXZ-lx-hvc" kind="relationship" relationship="rootViewController" id="ddb-ue-NcK"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="JRN-Yx-Wdg" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="2512" y="321"/>
         </scene>
         <!--Login View Controller-->
         <scene sceneID="cNZ-cG-TRU">
@@ -452,6 +434,6 @@
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="Gah-DG-gb5"/>
-        <segue reference="Fh5-FM-Qxa"/>
+        <segue reference="qvO-UK-9W5"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -150,16 +150,16 @@
 			isa = PBXGroup;
 			children = (
 				50F039381B6FD9C100A04EAF /* AppDelegate.swift */,
+				50BD46C41B7007DD00E4FFE7 /* MealTableViewController.swift */,
+				50F0393A1B6FD9C100A04EAF /* MealViewController.swift */,
+				50BD46E11B70538300E4FFE7 /* ProfileViewController.swift */,
 				50BD46DF1B7031C800E4FFE7 /* SignUpViewController.swift */,
 				50BD46E31B7059F100E4FFE7 /* LoginViewController.swift */,
-				50F0393A1B6FD9C100A04EAF /* MealViewController.swift */,
-				50BD46C41B7007DD00E4FFE7 /* MealTableViewController.swift */,
-				50BD46E11B70538300E4FFE7 /* ProfileViewController.swift */,
 				50F0393C1B6FD9C100A04EAF /* Main.storyboard */,
-				50F039581B6FE62300A04EAF /* RatingsControl.swift */,
-				50F039601B70000E00A04EAF /* Meal.swift */,
 				50F0393F1B6FD9C100A04EAF /* Images.xcassets */,
 				50F039411B6FD9C100A04EAF /* LaunchScreen.xib */,
+				50F039581B6FE62300A04EAF /* RatingsControl.swift */,
+				50F039601B70000E00A04EAF /* Meal.swift */,
 				50BD46C21B70035100E4FFE7 /* MealTableViewCell.swift */,
 				50F039361B6FD9C100A04EAF /* Supporting Files */,
 			);

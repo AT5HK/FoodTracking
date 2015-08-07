@@ -7,16 +7,27 @@
 //
 
 import UIKit
+import Parse
 
 class MealTableViewCell: UITableViewCell {
 
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var photoImageView: UIImageView!
     @IBOutlet weak var ratingControl: RatingsControl!
-    
+    var downloadedImage = UIImage()
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+    }
+    
+    func downloadImageFunc (meal :PFFile) -> UIImage {
+        
+            if let url = meal.url {
+                let data = NSData(contentsOfURL: NSURL(string:url)!) //make sure your image in this url does exist, otherwise unwrap in a if let check
+                self.downloadedImage = UIImage(data: data!)!
+            }
+        
+        return downloadedImage
     }
 
     override func setSelected(selected: Bool, animated: Bool) {

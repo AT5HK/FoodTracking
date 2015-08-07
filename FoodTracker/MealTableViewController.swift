@@ -69,11 +69,13 @@ class MealTableViewController: UITableViewController {
         let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath: indexPath) as! MealTableViewCell
         
         // Fetches the appropriate meal for the data source layout.
-        let userMeal: (AnyObject) = meals[indexPath.row]
+        let userMeal: (PFObject) = meals[indexPath.row] as! (PFObject)
         
         cell.nameLabel.text = userMeal["name"] as? String
-//        cell.photoImageView.image = userMeal["file"] as? NSData
         cell.ratingControl.rating = (userMeal["rating"] as? Int)!
+        
+        cell.photoImageView.image = cell.downloadImageFunc(userMeal["file"] as! PFFile)
+        
         return cell
     }
     
@@ -100,17 +102,24 @@ class MealTableViewController: UITableViewController {
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if segue.identifier == "ShowDetail" {
+        if segue.identifier == "showDetail" {
             let mealDetailViewController = segue.destinationViewController as! MealViewController
             
             // Get the cell that generated this segue.
             if let selectedMealCell = sender as? MealTableViewCell {
                 let indexPath = tableView.indexPathForCell(selectedMealCell)!
-//                let selectedMeal = meals[indexPath.row]
-//                mealDetailViewController.meal = selectedMeal
+                let selectedMeal: (PFObject) = meals[indexPath.row] as! (PFObject)
+                
+                let fetchedImage: PFFile? = selectedMeal["file"] as? PFFile
+                
+                if let url = fetchedImage?.url {
+                    let data = NSData(contentsOfURL: NSURL(string:url)!) //make sure your image in this url does exist, otherwise unwrap in a if let check
+                    var newMeal = Meal(name: selectedMeal["name"] as! String, photo: UIImage(data: data!), rating: selectedMeal["rating"] as! Int)
+                    mealDetailViewController.meal = newMeal
+                }
             }
         }
-        else if segue.identifier == "AddItem" {
+        else if segue.identifier == "addItem" {
             print("Adding new meal.")
         }
     }
